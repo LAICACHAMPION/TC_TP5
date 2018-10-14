@@ -1,8 +1,12 @@
 
-#ignora extras de altium, latex y LTspice, carpetas comprimidas, y archivos de configuracion de windows.
+#ignora extras de altium, latex y LTspice, carpetas comprimidas, pdfs y archivos de configuracion de windows.
+
+*.pdf
 
 ## configuracion de windows ##
 *.ini
+
+
 
 ## LTspice ##
 *.net
