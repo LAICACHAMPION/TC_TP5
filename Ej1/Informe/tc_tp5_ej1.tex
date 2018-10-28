@@ -9,7 +9,10 @@ En esta secci\'on, se implementar\'an dos filtros pasabajos haciendo uso de celd
 
 Para esto, haremos en primer lugar un an\'alisis te\'orico de las celdas Sallen-Key.
 
+
 \section{Introducci\'on: la celda Sallen-Key}
+
+La Sallen-Key es una celda que permite realizar un filtro de segundo orden utilizando s\'olo \textit{op amps}, resistencias y capacitores. Si bien normalmente con estos dos tipos de componentes pasivos s\'olo podr\'ian obtenerse polos reales, es decir $Q \leq \nicefrac{1}{2}$, el \textit{feedback} positivo introducido por el operacional permite obtener polos complejos conjugados, y por lo tanto una mayor selectividad. Como en este tipo de celdas existe un \'unico \textit{feedback} positivo, en general la sensibilidad del filtro a la dispersi\'on de los par\'ametros del operacional es menor, y a los valores de los componentes pasivos es mayor, respecto de otro tipo de celdas.\par  
 
 \begin{figure}[H]
 	\centering
@@ -35,6 +38,9 @@ Para esto, haremos en primer lugar un an\'alisis te\'orico de las celdas Sallen-
 	\end{circuitikz}
 	\caption{Celda Sallen-Key gen\'erica}
 \end{figure}
+
+En esta configuraci\'on, las resistencias $R_3$ y $R_4$ determinan la ganancia de la celda, puesto que forman un circuito no inversor en el camino del \textit{feedback} negativo, mientras que las dem\'as impedancias determinar\'an la ubicaci\'on de los polos y los ceros del circuito.\par
+
 
 \begin{figure}[H]
 	\centering
