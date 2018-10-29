@@ -18,20 +18,20 @@ La Sallen-Key es una celda que permite realizar un filtro de segundo orden utili
 	\centering
 	\begin{circuitikz}
   	\draw (0,0) node[op amp, yscale=-1] (opamp) {}
-  		(opamp.-) -| (-1.5, -1.5) 
+  		(opamp.-) -| (-1.5, -1.5) node[left] {$V^-$}
   		to [R = $R_3$, *-]  (-1.5, -3.5) node[ground] {}
   		
   		(-1.5, -1.5) to [R = $R_4$] (1.5, -1.5) 
   		to [short, -*] (1.5, 0) to [short, -o] (2, 0) node[right] {$V_{out}$}
   		(1.5,0) to [short] (opamp.out) 
   		
-  		(opamp.+) to [short, -*] (-2.5, 0.5)
+  		(opamp.+) to [short, -*] (-2.5, 0.5) node[above]{$V^+$}
   		to [generic, l=$Z_3$] (-2.5, -1.5) node[ground]{}
   		
 		(-2.5, 0.5) to [generic, l=$Z_2$] (-4.5, 0.5)
 		to [generic, l=$Z_1$, *-o] (-6.5, 0.5) node[left]{$V_{in}$}  		
 		
-		(-4.5, 0.5) to [short] (-4.5, 2)
+		(-4.5, 0.5) to [short, -*] (-4.5, 2) node[above] {$V_f$}
 		to [generic, l=$Z_4$] (1.5,2)
 		to [short] (1.5,0)
   	;
@@ -39,7 +39,46 @@ La Sallen-Key es una celda que permite realizar un filtro de segundo orden utili
 	\caption{Celda Sallen-Key gen\'erica}
 \end{figure}
 
-En esta configuraci\'on, las resistencias $R_3$ y $R_4$ determinan la ganancia de la celda, puesto que forman un circuito no inversor en el camino del \textit{feedback} negativo, mientras que las dem\'as impedancias determinar\'an la ubicaci\'on de los polos y los ceros del circuito.\par
+En esta configuraci\'on, las resistencias $R_3$ y $R_4$ determinan la ganancia de la celda, puesto que forman un circuito no inversor en el camino del \textit{feedback} negativo. Las dem\'as impedancias, por otro lado, s\'olo tienen injerecia en la ubicaci\'on de los polos y los ceros del circuito, si bien la misma tembi\'en se ve afectada por las resistencias del no inversor.\par
+
+Las ecuaciones que describen a este circuito son: 
+
+\begin{equation}
+	\left\{
+ 	\begin{aligned}
+ 		V_{out} &= A_{vol} \cdot (V^+ - V^-) \\
+ 		V^+ &= \frac{Z_2}{Z_2+Z_3} V_f  \\
+		V^- &= \frac{R_3}{R_3+R_4} V_{out} \\
+		\frac{V_{in} - V_f}{Z_1} &= \frac{V_f - V^+}{Z_2} +\frac{V_f - V_{out}}{Z_4} 
+	\end{aligned}
+	\right.
+ \end{equation}
+ 
+De esta \'ultima ecuaci\'on y expresando $V_f$ como funci\'on de $V^+$ se puede obtener que:
+
+\begin{equation}
+	V^+ = \left[ \left(1 + \frac{Z_3}{Z_2}\right) \cdot \left( \frac{1}{Z_1} + \frac{1}{Z_2} + \frac{1}{Z_4}\right) - \frac{1}{Z_2}\right] \cdot
+			\left( \frac{V_{in}}{Z_1} + \frac{V_{out}}{Z_4}\right) = \frac{d}{Z_1} V_{in} + \frac{\gamma}{Z_4} V_{out}
+\end{equation}
+
+Por simplicidad, se efectu\'o la sustituci\'on $\gamma = \left(1 + \frac{Z_3}{Z_2}\right) \cdot \left( \frac{1}{Z_1} + \frac{1}{Z_2} + \frac{1}{Z_4}\right) - \frac{1}{Z_2}$.
+Si llamamos adem\'as $K = 1 + \nicefrac{R_4}{R_3}$ a la ganancia del no inversor, esto se puede expresar mediante el siguiente diagrama de flujo de se\~nal: \par
+
+\begin{equation}
+	\frac{V_{out}}{V_{in}} = \frac{K}{ \frac{Z_1 Z_2}{Z_3 Z_4} + \frac{Z_1}{Z_3} + \frac{Z_2}{Z_3} + \frac{Z_1 \cdot (1-K)}{Z_4} + 1} 
+	\label{eq:1-tf-sk-generica}
+\end{equation}
+
+En el caso particular de la celda Sallen-Key pasabajos, las sustituciones que se realizan son:
+
+\begin{equation*}
+	\left\{
+ 	\begin{aligned}
+		Z_1 &=  R_1 & Z_3 &= \frac{1}{sC_1}\\
+		Z_2 &= R_2 & Z_4 &= \frac{1}{sC_2}\\
+	\end{aligned}
+	\right.
+ \end{equation*}
 
 
 \begin{figure}[H]
@@ -67,7 +106,28 @@ En esta configuraci\'on, las resistencias $R_3$ y $R_4$ determinan la ganancia d
 	\caption{Celda Sallen-Key pasabajos}
 \end{figure}
 
+ 
+Reemplazando en la ecuaci\'on \ref{eq:1-tf-sk-generica}, se obtiene que:
 
+\begin{equation}
+	\frac{V_{out}}{V_{in}} = \frac{K}{ s^2 \cdot R_1 R_2 C_1 C_2 + s \cdot \left[ (R_1 + R_2) C_1 + R_1 (1-K) C_2\right] + 1}
+\end{equation}
+
+Efectivamente, esta ecuaci\'on corresponde a un filtro pasabajos de segundo orden, cuyos par\'ametros caracter\'isticos son:
+
+\begin{equation}
+	\left\{
+ 	\begin{aligned}
+		f_0 &= \frac{1}{2\pi} \cdot \sqrt{\frac{1}{ R_1 R_2 C_1 C_2 }}\\
+		Q &= \frac{\sqrt{ R_1 R_2 C_1 C_2 }}{  (R_1 + R_2) C_1 + R_1 (1-K) C_2 }\\	
+		G &= 1 + \frac{R_4}{R_3} 	
+	\end{aligned}
+	\right.
+ \end{equation}
+ 
+Como se ver\'a m\'as adelante, los dos filtros implementados con estas celdas tienen ganancia unitaria. Si bien podr\'ian utilizarse ganancias distintas de 1 en cada etapa, y si fuese necesario compensarlo con una etapa inversora o no inversora, por simplicidad s\'olo se considerar\'a el caso K = 1. Un posible problema de utilizar este criterio es que obtener un valor elevado de Q puede tornarse m\'as dif\'icil, o simplemente imposible, dadas las restricciones pr\'acticas a la hora de determinar los valores de los componentes. Sin embargo cabe destacar tambi\'en que si $K>1$, se debe prestar particular atenci\'on a no llegar a valores negativos para el coeficiente lineal del denominador de la transferencia, puesto que esto har\'ia que el sistema pierda su estabilidad, y por lo tanto as\'i nos desentendemos de este problema.
+
+ 
 \begin{figure}[H]
 	\centering
 	\begin{circuitikz}
