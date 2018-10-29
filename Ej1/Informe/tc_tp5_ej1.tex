@@ -64,6 +64,32 @@ De esta \'ultima ecuaci\'on y expresando $V_f$ como funci\'on de $V^+$ se puede 
 Por simplicidad, se efectu\'o la sustituci\'on $\gamma = \left(1 + \frac{Z_3}{Z_2}\right) \cdot \left( \frac{1}{Z_1} + \frac{1}{Z_2} + \frac{1}{Z_4}\right) - \frac{1}{Z_2}$.
 Si llamamos adem\'as $K = 1 + \nicefrac{R_4}{R_3}$ a la ganancia del no inversor, esto se puede expresar mediante el siguiente diagrama de flujo de se\~nal: \par
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{imagenes/tc_tp1_ej1_df_1.png}
+	
+	\caption{Diagrama de flujo de se\~nal del circuito}
+\end{figure}
+
+Sucesivas simplificaciones permiten llevar el diagrama anterior a una forma que nos permita ver claramente los \textit{loops} de \textit{feedback} del circuito
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{imagenes/tc_tp1_ej1_df_2.jpg}\\
+	\includegraphics[scale=0.35]{imagenes/tc_tp1_ej1_df_3.jpg}	
+	\caption{Simplificaciones del diagrama de flujo de se\~nal}
+	\label{fig:1-flujo-de-senal}
+\end{figure}
+
+Partiendo de la figura \ref{fig:1-flujo-de-senal}, se puede obtener trivialmente la transferencia como:
+
+\begin{equation}
+	\frac{V_{out}}{V_{in}} = \frac{\gamma}{Z_1} \cdot \left( \frac{A_{vol}}{1 + A_{vol} \cdot \left( \frac{\gamma}{Z_4} - \frac{1}{K} \right)} \right)
+	\label{eq:1-tf-sk-generica-avol}
+\end{equation}
+
+Si consideramos el caso ideal $A_{vol} \to \infty$, volviendo a reemplazar por el valor original de $\gamma$ obtenemos que:
+
 \begin{equation}
 	\frac{V_{out}}{V_{in}} = \frac{K}{ \frac{Z_1 Z_2}{Z_3 Z_4} + \frac{Z_1}{Z_3} + \frac{Z_2}{Z_3} + \frac{Z_1 \cdot (1-K)}{Z_4} + 1} 
 	\label{eq:1-tf-sk-generica}
@@ -125,8 +151,9 @@ Efectivamente, esta ecuaci\'on corresponde a un filtro pasabajos de segundo orde
 	\right.
  \end{equation}
  
-Como se ver\'a m\'as adelante, los dos filtros implementados con estas celdas tienen ganancia unitaria. Si bien podr\'ian utilizarse ganancias distintas de 1 en cada etapa, y si fuese necesario compensarlo con una etapa inversora o no inversora, por simplicidad s\'olo se considerar\'a el caso K = 1. Un posible problema de utilizar este criterio es que obtener un valor elevado de Q puede tornarse m\'as dif\'icil, o simplemente imposible, dadas las restricciones pr\'acticas a la hora de determinar los valores de los componentes. Sin embargo cabe destacar tambi\'en que si $K>1$, se debe prestar particular atenci\'on a no llegar a valores negativos para el coeficiente lineal del denominador de la transferencia, puesto que esto har\'ia que el sistema pierda su estabilidad, y por lo tanto as\'i nos desentendemos de este problema.
+Como se ver\'a m\'as adelante, los dos filtros implementados con estas celdas tienen ganancia unitaria. Si bien podr\'ian utilizarse ganancias distintas de 1 en cada etapa, y si fuese necesario compensarlo con una etapa inversora o no inversora, por simplicidad s\'olo se considerar\'a el caso K = 1. Un posible problema de utilizar este criterio es que obtener un valor elevado de Q puede tornarse m\'as dif\'icil, o simplemente imposible, dadas las restricciones pr\'acticas a la hora de determinar los valores de los componentes. Sin embargo cabe destacar tambi\'en que si $K>1$, se debe prestar particular atenci\'on a no llegar a valores negativos para el coeficiente lineal del denominador de la transferencia, puesto que esto har\'ia que el sistema pierda su estabilidad, y por lo tanto as\'i nos desentendemos de este problema. \par
 
+Para obtener ganancia unitaria, entonces, se reemplaza la resistencia $R_4$ por un cable y se deja un circuito abierto donde estar\'ia $R_3$, de forma tal que $G = 1 + \frac{R_4}{R_3} = 1$.
  
 \begin{figure}[H]
 	\centering
