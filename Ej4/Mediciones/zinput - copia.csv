@@ -1,3 +1,31 @@
+#Digilent WaveForms Impedance Analyzer
+#Device Name: Discovery2
+#Serial Number: SN:210321A35FCC
+#Date Time: 2018-10-27 18:30:17.064
+#Trace: Trace
+#Start: 3000 Hz
+#Stop: 300000 Hz
+#Steps: 100
+#Order: W1-C1-DUT-C2-R-GND
+#Resistor: 100000 O
+#Average: 1
+#ProbeCapacitance: 1.04e+06 O
+#ProbeResistance: 4.3e-11 F
+#Compensation:
+#Wavegen: Wavegen1
+#Amplification: 1 X
+#Settle: 10 ms
+#MinPeriods: 16
+#Channel: Channel 1
+#Range: 5.42537 V
+#Offset: 0.000183761 V
+#Attenuation: 1 X
+#Channel: Channel 2
+#Range: 5.47028 V
+#Offset: -7.92091e-07 V
+#Attenuation: 1 X
+
+Frequency (Hz),Trace ? (°),Trace |Z| (O)
 3000,-57.514197988802493,2021333.6756709672
 6000,-56.433729165509604,1960808.3329027647
 9000,-55.419369968413548,1905325.549005857
