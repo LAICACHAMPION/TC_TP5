@@ -178,7 +178,6 @@ Para obtener ganancia unitaria, entonces, se reemplaza la resistencia $R_4$ por 
 	\caption{Celda Sallen-Key pasabajos con ganancia unitaria}
 \end{figure}
 
-<<<<<<< HEAD
 Con esta configuraci\'on, las expresiones finales de $Q$ y $f_0$ son:
 
 \begin{equation}
@@ -266,8 +265,7 @@ Como no se puede implementar una etapa de primer orden con una celda Sallen-Key,
  		to  [short, -*]($(opamp.-)+(2.2,1)$)
  		
  		(opamp.+) to[short] ($(opamp.+) - (0,.5)$) node[ground] {}
-  ;
-	\end{circuitikz}
+  		;\end{circuitikz}
 	\caption{Circuito integrador compensado}
 \end{figure}
 
@@ -277,7 +275,60 @@ La transferencia de este circuito, considerando operacionales ideal es:
 	H(s) = - \frac{R_2}{R_1} \cdot \left(\frac{1}{s \cdot R_1 C_1 + 1}\right)
 \end{equation}
 
+Por lo tanto en esta etapa se debe cumplir que:
+
+\begin{equation}
+	\left\{
+ 	\begin{aligned}
+ 		f_0 &= \frac{1}{2\pi} \cdot \frac{1}{\sqrt{R_1 C_1}} \\
+ 		\frac{R_2}{R_1} &= 1
+	\end{aligned}
+	\right.
+	\label{eq:int-comp}
+\end{equation}
+
+Los valores de los componentes se calcularon, pues, a partir de las f\'ormulas \ref{eq:f0-q} y \ref{eq:int-comp}. Considerando adem\'as que los capacitores deb\'ian estar en el orden de los nanofaradios, se determinaron los siguientes valores:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c||c|c|c|c|}
+	\hline
+	Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \hline \hline
+	1     & 1                 & 1                 & 5.4          & -            \\ \hline
+	2     & 3.5               & 2.2               & 3            & 1.5          \\ \hline
+	3     & 1.1               & 1.1               & 16.3         & .820         \\ \hline
+	\end{tabular}
+	\caption{Valores de los componentes del filtro 1}
+\end{table}
+
+
 \section{Filtro 2: Bessel}
 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c||c|c|c|}
+\hline
+Etapa & Orden & $f_0\, (kHz)$ & Q    \\ \hline\hline
+1     & 2     & 4.5           & 0.51 \\ \hline
+2     & 2     & 4.3           & 0.61 \\ \hline
+3     & 2     & 5.1           & 1.02 \\ \hline
+\end{tabular}
+\caption{Etapas del filtro 2}
+\end{table}
+
+
+
+\begin{table}[H]
+	\centering
+\begin{tabular}{|c||c|c|c|c|}
+\hline
+Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \hline\hline
+1     & 1.00              & 1.00              & 42.9         & 28.7         \\ \hline
+2     & 18.1              & 18.1              & 2.1          & 2.0          \\ \hline
+3     & 1.00              & 1.00              & 63.7         & 15.2         \\ \hline
+\end{tabular}
+\caption{Valores de los componentes del filtro 2}
+\end{table}
 
 \end{document}
