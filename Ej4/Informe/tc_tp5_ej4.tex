@@ -181,10 +181,35 @@ A partir de los polos y ceros obtenidos, se eligieron los componentes de las tre
 Se simularon las tres etapas en cascadas para corroborar que cumpla plantilla el diseño teorico, la tolerancia de las resistencias fueron del 5\% y 10\% para los capacitores.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.6\textwidth]{imagenes/montecarlo.png}
+	\includegraphics[width=0.8\textwidth]{imagenes/montecarlo.png}
 	\caption{Modulo de la respuesta en frecuencia}
 \end{figure}
 Como se observa en la simulación $f_0\in (28KHz,32KHz)$. Ademas presentan sobrepicos en ganancia, estos se deben a que se deja de cumplir la condicion para que las celdas sean pasa banda $R_4=\frac{R_5 R_1}{R}$.
+
+A partir del análisis de Montecarlo del circuito se realizó un histograma, para conocer la dispersión de las características relevantes del circuito.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.95\textwidth]{imagenes/hist.png}
+	\caption{Histogramas de $W_0$,$\Delta W$ y $Q$, obtenidos del analisis de montecarlo}
+\end{figure}
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ &Valor medio &Desvió estándar\\
+\hline \hline
+
+$ f_0$ &29161 Hz &621 Hz  \\ \hline
+$\Delta f$ & 5166 Hz&1378 Hz  \\ \hline
+$Q$ &5.6 &1.42  \\ \hline
+
+\end{tabular}
+\caption{Información estadística del análisis de Montecarlo.} 
+\end{center}
+\end{table}
+
 \subsection{Simulación de la impedancia de entrada}
 Como se observa en la figura, la impedancia de entrada del circuito es menor que $7K\Omega$, por ende para conseguir una impedancia de entrada superior a los $50K\Omega$, al filtro se le agrego un buffer.
 \begin{figure}[H]	
