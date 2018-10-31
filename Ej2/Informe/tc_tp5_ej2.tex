@@ -125,7 +125,14 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
  		\item $R_3 = 243$
  	\end{itemize}
  	
- 	Luego se retocaron los valores de las resistencias $R_3$ para ambas etapas para que se obtuviesen mejores resultados al simular en Ltspice, obteniendo una mejor ganancia en la banda de paso y así mejorando el cumplimiento de la plantilla.\par
+ 	\begin{figure}[H]	% Circuito implementado
+	\centering
+	\includegraphics[scale=0.5]{imagenes/circuito_implementado.png}
+	\caption{Circuito final}
+	\label{fig:ej2_circuito_implementado}
+	\end{figure}
+	
+ 	Luego se retocaron los valores de las resistencias $R_3$ para ambas etapas para obtener mejores resultados al simular en Ltspice, obteniendo así una mejor ganancia en la banda de paso y mejorando de la misma manera el cumplimiento de la plantilla.\par
  	Para obtener una impedancia de entrada lo suficientemente grande, se dispuso de un buffer a la entrada, implementado con un opamp TL084 al igual que para el resto de los opamps utilizados. 
  	De aquí se presenta el circuito diseñado: \par
  	
@@ -133,6 +140,21 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
 		
  	 \section{Mediciones}
  	 
+ 	 Se muestra la respuesta a una señal sinusoidal en la frecuencia central del pasabanda, con su respectiva ganancia.
+ 	\begin{figure}[H]	% Circuito implementado
+	\centering
+	\includegraphics[scale=0.5]{imagenes/frec_corte_posta.png}
+	\caption{Medición en la frecuencia central del pasabanda: 56 kHz}
+	\label{fig:ej2_frec_corte_posta}
+	\end{figure}
+ 	\begin{figure}[H]	% Circuito implementado
+	\centering
+	
+	Se obtuvo la respuesta al escalón para observar la respuesta a todas las frecuencias y demostrar que el circuito no oscila.
+	\includegraphics[scale=0.5]{imagenes/resp_escalon.png}
+	\caption{Respuesta al escalón}
+	\label{fig:ej2_resp_escalon}
+	\end{figure}
  	 \subsection{Análisis de Montecarlo}
  	 \subsection{}
 \clearpage\newpage
