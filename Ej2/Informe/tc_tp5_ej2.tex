@@ -138,7 +138,29 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
  	
  	 \section{Simulación}
 	\subsection{Análisis de Montecarlo}
- 	 
+	Se realizó un análisis de montecarlo para verificar que la banda de paso cumpliera con plantilla para toda resistencia dentro del rango de tolerancias. Se verificó que este es el caso.\par
+	 	 \begin{figure}[H]	% Histograma banda de paso
+	\centering
+	\includegraphics[scale=0.5]{imagenes/montecarlo_ok.png}
+	\caption{Correcto funcionamiento del filtro teniendo en cuenta sensibilidades}
+	\label{fig:ej2_montecarlo_ok}
+	\end{figure}
+	
+ 	 Se muestra un histograma con las ocurrencias de los -0.02 dB para el filtro, que indicaría la presencia de la banda de paso.
+ 	 \begin{figure}[H]	% Histograma banda de paso
+	\centering
+	\includegraphics[scale=0.5]{imagenes/histograma.png}
+	\caption{Histograma con las ocurrencias de los -0.02 dB para la banda de paso}
+	\label{fig:ej2_histograma}
+	\end{figure}
+	Además se cuenta con un histograma de la frecuencia de los polos: 
+	 	 \begin{figure}[H]	% Histograma banda de paso
+	\centering
+	\includegraphics[scale=0.5]{imagenes/polos_histograma.png}
+	\caption{Histograma con las ocurrencias de los 5dB para obtener la frecuencia de los polos}
+	\label{fig:ej2_polos_histograma}
+	\end{figure}
+	
  	 \section{Mediciones}
  	 
  	 Se muestra la respuesta a una señal sinusoidal en la frecuencia central del pasabanda, con su respectiva ganancia.
@@ -158,14 +180,20 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
 	\label{fig:ej2_resp_escalon}
 	\end{figure}
 	
-	Se muestra la superposición con lo medido y se confirma que se cumple la plantilla.
+	Se muestra la superposición con lo medido para el módulo y se confirma que se cumple la plantilla. Lo simulado en naranja, lo medido en violeta.
 	 	\begin{figure}[H]	% medicion superpuesta con simulacion
 	\centering
 	\includegraphics[scale=0.2]{imagenes/montecarlo_superpuesto.png}
 	\caption{Simulación contra medido en escala semilogarítmica}
 	\label{fig:ej2_montecarlo_superpuesto}
 	\end{figure}
-	
+		Se muestra la superposición con lo medido para la fase. Lo simulado en naranja, lo medido en violeta.\par
+	\begin{figure}[H]	% medicion superpuesta con simulacion
+	\centering
+	\includegraphics[scale=0.3]{imagenes/fase.png}
+	\caption{Fase simulada en azul, fase medida en naranja}
+	\label{fig:ej2_fase}
+	\end{figure}
 	Se agrega una foto de la medición directa, con las frecuencias de interés remarcadas, pudiéndose observar que efectivamente se cumple plantilla.
 	
 	\begin{figure}[H]	% medicion analog, foto
@@ -177,7 +205,9 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
 	
 
  	 
- 	 \subsection{}
+\section{Conclusión y Resultados}
+
+Se logró implementar el filtro correctamente mediante el uso de las celdas de Rauch. 
 \clearpage\newpage
 
 

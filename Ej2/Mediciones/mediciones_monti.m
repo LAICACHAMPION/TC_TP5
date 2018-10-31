@@ -9,13 +9,9 @@ Mag = M(:,2);
 Pha = M(:,3);
 
 
-semilogx(Frec, Mag)
+plot(Frec, Pha)
 xlabel('Frequency (Hz)')
-ylabel('Magnitude (dB)')
-Frec(1)
-log(Frec(1))
-log(Frec(length(Frec)))
-
+ylabel('Fase (grados)')
 
 
 % #Digilent WaveForms Network Analyzer - Bode
@@ -47,7 +43,7 @@ Mag1 = M2(:,2);
 Mag2 = M2(:,3);
 Pha2 = M2(:,4);
 
-semilogx(Frec2, Mag2)
-xlim([1000 Frec(length(Frec))])
-ylim([-100 10])
+plot(Frec2, Pha2)
+% xlim([1000 Frec(length(Frec))])
+% ylim([-100 10])
 
