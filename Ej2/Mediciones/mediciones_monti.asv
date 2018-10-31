@@ -1,0 +1,17 @@
+clearvars;
+clc;
+M = csvread('Simulacion_comun_bode.csv');
+
+Frec = M(:,1)
+Mag = M(:,2);
+Pha = M(:,3);
+
+
+semilogx(Frec, Mag)
+xlabel('Frequency (Hz)')
+ylabel('Magnitude (dB)')
+Frec(1)
+log(Frec(1))
+log(Frec(length(Frec)))
+xlim(Frec(1) Frec(length(Frec))])
+% ylim([-0.4 0.8])
