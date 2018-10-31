@@ -66,7 +66,7 @@ Si llamamos adem\'as $K = 1 + \nicefrac{R_4}{R_3}$ a la ganancia del no inversor
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.7]{imagenes/tc_tp1_ej1_df_1.png}
+	\includegraphics[scale=0.5]{imagenes/tc_tp1_ej1_df_1.png}
 	
 	\caption{Diagrama de flujo de se\~nal del circuito}
 \end{figure}
@@ -75,8 +75,8 @@ Sucesivas simplificaciones permiten llevar el diagrama anterior a una forma que 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.7]{imagenes/tc_tp1_ej1_df_2.jpg}\\
-	\includegraphics[scale=0.7]{imagenes/tc_tp1_ej1_df_3.jpg}	
+	\includegraphics[scale=0.5]{imagenes/tc_tp1_ej1_df_2.jpg}\\
+	\includegraphics[scale=0.5]{imagenes/tc_tp1_ej1_df_3.jpg}	
 	\caption{Simplificaciones del diagrama de flujo de se\~nal}
 	\label{fig:1-flujo-de-senal}
 \end{figure}
@@ -251,7 +251,7 @@ Habiendo obtenido la funci\'on transferencia de este filtro mediante la aproxima
 
 El criterio que se tom\'o para ordenar las etapas fue seg\'un el $Q$: como se debe trabajar en altas se\~nales, se pusieron primero las etapas que menores sobrepicos presentaban, es decir en primer lugar la etapa de orden 1 (que no presenta sobre pico en absoluto) y luego las de orden 2 ordenadas por $Q$ creciente. De esta manera, cuando la se\~nal que se amplifica debido al sobrepico no es la de entrada, sino una que ya pas\'o por al menos una etapa de atenuaci\'on, y por lo tanto el rango din\'amico del circuito mejora respecto de otras configuraciones. \par
 
-Como no se puede implementar una etapa de primer orden con una celda Sallen-Key, se utiliz\'o un circuito integrador compensado:
+Como no se puede implementar una etapa de primer orden con una celda Sallen-Key, se utiliz\'o un circuito integrador compensado.
 
 \begin{figure} [H]
 	\centering
@@ -388,7 +388,7 @@ Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \
 
 Nuevamente ocurre que con estos valores no se cumple la condici\'on de la plantilla para la impedancia de entrada. Considerando el circuito \ref{fig:1-celda}, se puede observar que cuando la frecuencia es lo suficientemente alta como para considerar despreciable a la impedancia de los capacitores, la impedancia de entrada de la celda es $R_1$: $V^+$ est\'a conectado a \textit{ground}, y $V^-$ a $V_{out}$, que a su vez est\'a conectado al nodo que se encuentra entre $R_1$ y $R_2$, y por lo tanto la tensi\'on despu\'es de $R_1$ es la de tierra y esta resistencia es el valor final de la impedancia de entrada. Sin embargo, si se buscan valores m\'as grandes de $R_1$ se comprometen la sensibilidad del factor de calidad de la celda a las resistencias, y adem\'as se obtienen valores de capacitores demasiado peque\~nos para resultar pr\'acticos.  Por lo tanto, se volvi\'o a utilizar un \textit{buffer} en la entrada, haciendo uso del operacional restante del integrado.\par 
 
-Con tolerancias del 1\% para las resistencias y de 10\% para los capacitores, y utilizando nuevamente el TL074, la dispersi\'on obtenida para $f_p$ y $f_a$ fue:
+Con tolerancias del 1\% para las resistencias y de 10\% para los capacitores, y utilizando nuevamente el TL074, se obtuvo la dispersi\'on de $f_p$ y de $f_a$ mediante un an\'alisis de Montecarlo con 100 curvas. 
 
 \begin{figure}[H]
 	\centering
@@ -431,7 +431,10 @@ De acuerdo a lo determinado en la simulaci\'on, a pesar de que la plantilla de s
 
 \section{Conclusiones}
 
+Se lograron implementar dos filtros pasabajos con celdas Sallen-Key, de orden 5 y 6 respectivamente. El filtro de grado 6, calculado a partir de la aproximaci\'on de Bessel, exhibi\'o un comportamiento mucho m\'as similar al esperado que el de Legendre. Para este \'ultimo filtro tambi\'en se observ\'o una mayor dispersi\'on en $f_p$. Esto se puede deber a que en este filtro hab\'ia una etapa con las resistencias distintas entre s\'i, lo cual aumenta la sensibilidad de $Q$ a variaciones en los valores de los componentes. A su vez, los factores de calidad de las etapas de segundo orden del filtro realizado con Legendre eran m\'as altos que las de Bessel, con lo cual esta sensibilidad podr\'ia ser m\'as cr\'itica al afectar la frecuencia donde cae el sobrepico de la etapa. \par
 
+Un problema que con certeza puede atribuirse al $Q$ elevado es la dificultad de encontrar componentes de valores razonables que se ajusten a las frecuencias de corte y factores de calidad pedidos. En la segunda etapa del filtro de Legendre, result\'o problem\'atico implementar un $Q$ de 2.23: se debi\'o usar un capacitor de $820pF$, que est\'a entre los \'ultimos valores que podr\'ia ser razonable usar en un circuito de estas caracter\'isticas. Para valores de $Q$ mayores problemente ser\'ia m\'as conveniente recurrir a otro tipo de celda. \par
 
+De haber sido necesario implementar un $Q$ mayor con una celda Sallen-Key, se podr\'ia haber abandonado la simplificaci\'on de ganancia unitaria, puesto que para ganancias m\'as altas el factor de calidad aumenta en este circuito. Sin embargo, para este caso result\'o conveniente tener menos variables en juego a la hora de elegir los componentes. \par
 
 \end{document}
