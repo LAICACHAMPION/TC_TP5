@@ -176,6 +176,7 @@ Para obtener ganancia unitaria, entonces, se reemplaza la resistencia $R_4$ por 
   	;
 	\end{circuitikz}
 	\caption{Celda Sallen-Key pasabajos con ganancia unitaria}
+	\label{fig:1-celda}
 \end{figure}
 
 Con esta configuraci\'on, las expresiones finales de $Q$ y $f_0$ son:
@@ -303,6 +304,8 @@ Los valores de los componentes se calcularon, pues, a partir de las f\'ormulas \
 	\caption{Valores de los componentes del filtro 1}
 \end{table}
 
+Si bien estos valores requieren realizar una cantidad considerable de combinaciones serie y paralelo de componentes, los mismos pueden obtenerse con un error inferior al 1\% para todos los casos.\par 
+
 En este punto, el circuito propuesto no estar\'ia cumpliendo la condici\'on de tener impedancia de entrada mayor a $50k\Omega$: puesto que la primera etapa es el integrador, la impedancia de este circuito es constante $R_1 = 1k\Omega$ (considerando los \textit{op amps} como ideales). Si se corrigiese esto con $R_1 = R_2 = 50k\Omega$, se obtendr\'ia un valor de $C_1 = 108pF$. Consideramos que este valor es demasiado peque\~no para medir satisfactoriamente, puesto que es comparable con la capacidad de las puntas del osciloscopio, incluso con las puntas en $\times 10 \sim 10pF$, y esto sin siquiera tener en cuenta el hecho de que se deber\'ia dejar un margen de error para que la impedancia de entrada no deje de cumplir plantilla por las tolerancias de los componentes.\par
 
 Por lo tanto, se decidi\'o utilizar un \textit{buffer} en la entrada, de forma tal que la impedancia de entrada sea la del operacional. El integrado utilizado tanto para el \textit{buffer} como para la realizaci\'on de las celdas fue el TL074, puesto que proporciona los 4 operacionales necesitados en un \'unico componente, y posee buenas prestaciones en cuanto a impedancia de entrada (lo cual es particularmente imporante para que las suposiciones realizadas sobre que la corriente en el operacional es despreciable se vean reflejadas en la realidad). Su principal desventaja respecto de otros operacionales es su ancho de banda, de $3MHz$, pero en este caso se espera atenuar$100\nicefrac{dB}{dec}$ a partir de los $33kHz$, con lo cual no es un problema. \par
@@ -318,7 +321,7 @@ Para verificar que la tolerancia de los componentes no provocara que se dejara d
 Se observa aqu\'i que si bien casi el 90\% de las curvas tienen $f_p \geq 33kHz$, existe la posibilidad de que esto no ocurra. Puesto que las tolerancias de los componentes no pueden mejorarse y todas las resistencias de una misma celda tienen el mismo valor y por lo tanto m\'inima sensibilidad a $Q$, se coloc\'o un preset en la $R_2$ de la \'ultima celda. Para peque\~nas variaciones de este valor alrededor de $R_1$, la variaci\'on de $Q$ deber\'ia ser pr\'acticamente nula, con lo cual se podr\'ia mover la frecuencia de corte del polo sin afectar el resto de los par\'ametros de la celda. Se verific\'o en \textit{Spice} que colocando un preset de $5k\Omega$ se podr\'ia mover la curva de la funci\'on transferencia al punto deseado.
 
 
-\subsection*{An\'alisis de resultados}
+\subsection{An\'alisis de resultados}
 
 \begin{figure}[H]
 	\centering
@@ -337,40 +340,67 @@ El circuito cumple satisfactoriamente con la plantilla propuesta. La forma de la
 
 \section{Filtro 2: Bessel para baja se\~nal}
 
+A continuaci\'on se implementar\'a un filtro con plantilla tanto de atenuaci\'on como de retardo de grupo. Para esto se utilizar\'a la aproximaci\'on de Bessel, y la tranferencia elegida se realizar\'a nuevamente con celdas Sallen-Key.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$f_p$    & $f_a$     & $A_p$ & $A_a$  & $\Upsilon(f_p)$ & $\abs{Z_{in}(f)}$            \\ \hline
+$2200Hz$ & $10400Hz$ & $dB$  & $40dB$ & $\leq 5\%$    & $\geq 50k\Omega\, \forall f$ \\ \hline
+\end{tabular}
+\caption{Plantilla del filtro pasabajos con Bessel}
+\end{table}
+
+Al contrario del caso anterior, como tenemos un valor que cumplir de $A_a$ no se puede reducir libremente $A_p$ para tener mayor margen de error. En principio un filtro de grado 5 puede cumplir con la plantilla propuesta, pero se fracas\'o en intentos de obtener un Montecarlo satisfactorio para esta plantilla. Puesto adem\'as que la diferencia de complejidad entre un filtro de grado 6 con uno de grado 5 no es muy significativa utilizando estas celdas, dado que se utiliza la misma cantidad de operacionales y s\'olo se agrega un componente respecto del integrador compensado utlizado en el filtro anterior, se decidi\'o realizar tres etapas de segundo orden. \par 
+
+Tambi\'en se verific\'o que esta la condici\'on de atenuaci\'on es mucho m\'as restrictiva que la de retardo de grupo, que en todos los casos probados se cumpl\'ia para frecuencias m\'as del doble de $f_p$ para filtros de grado 5 o 6 centrados en esta frecuencia. \par
+
+Nuevamente, se armaron las etapas imponiendo la condici\'on de ganancia unitaria para todas ellas.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|c||c|c|c|}
 \hline
 Etapa & Orden & $f_0\, (kHz)$ & Q    \\ \hline\hline
-1     & 2     & 4.5           & 0.51 \\ \hline
+1     & 2     & 5.1           & 1.02 \\ \hline
 2     & 2     & 4.3           & 0.61 \\ \hline
-3     & 2     & 5.1           & 1.02 \\ \hline
+3     & 2     & 4.5           & 0.51 \\ \hline
 \end{tabular}
 \caption{Etapas del filtro 2}
 \end{table}
 
+En este caso, el criterio para ordenar las etapas fue el opuesto al anterior: como se especifica que este filtro es para bajas se\~nales, se procura que la amplificaci\'on en los sobrepicos tome lugar antes de la atenuaci\'on. \par
 
+Los componentes se eligieron de la siguiente manera:
 
 \begin{table}[H]
 	\centering
 \begin{tabular}{|c||c|c|c|c|}
 \hline
 Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \hline\hline
-1     & 1.00              & 1.00              & 42.9         & 28.7         \\ \hline
+1     & 1.00              & 1.00              & 63.7         & 15.2         \\ \hline
 2     & 18.1              & 18.1              & 2.1          & 2.0          \\ \hline
-3     & 1.00              & 1.00              & 63.7         & 15.2         \\ \hline
+3     & 1.00              & 1.00              & 42.9         & 28.7         \\ \hline
 \end{tabular}
 \caption{Valores de los componentes del filtro 2}
 \end{table}
 
+Nuevamente ocurre que con estos valores no se cumple la condici\'on de la plantilla para la impedancia de entrada. Considerando el circuito \ref{fig:1-celda}, se puede observar que cuando la frecuencia es lo suficientemente alta como para considerar despreciable a la impedancia de los capacitores, la impedancia de entrada de la celda es $R_1$: $V^+$ est\'a conectado a \textit{ground}, y $V^-$ a $V_{out}$, que a su vez est\'a conectado al nodo que se encuentra entre $R_1$ y $R_2$, y por lo tanto la tensi\'on despu\'es de $R_1$ es la de tierra y esta resistencia es el valor final de la impedancia de entrada. Sin embargo, si se buscan valores m\'as grandes de $R_1$ se comprometen la sensibilidad del factor de calidad de la celda a las resistencias, y adem\'as se obtienen valores de capacitores demasiado peque\~nos para resultar pr\'acticos.  Por lo tanto, se volvi\'o a utilizar un \textit{buffer} en la entrada, haciendo uso del operacional restante del integrado.\par 
 
+Con tolerancias del 1\% para las resistencias y de 10\% para los capacitores, y utilizando nuevamente el TL074, la dispersi\'on obtenida para $f_p$ y $f_a$ fue:
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{imagenes/bes_hist_bw.png}
-	\caption{Dispersi\'on de la frecuencia de corte del filtro 2}
+	\includegraphics[scale=0.7]{imagenes/bes_hist_fa.png}
+	\caption{Dispersi\'on de las frecuencia de corte y de atenuaci\'on del filtro 2}
 \end{figure}
+
+En principio la plantilla se cumple para todas las combinaciones calculadas de variaciones en los valores de los componentes respecto al nominal. Sin embargo, puesto que en ambos casos se est\'a en valores muy cercanos al de $f_p$ y $f_a$ de la plantilla en el peor caso, se coloc\'o un preset en la $R_2$ de la etapa de todas maneras, a fin de potencialmente poder contrarrestar los efectos de factores no considerados en la simulaci\'on que terminen de correr la curva para la zona no aceptada. \par
+
+
+\subsection{An\'alisis de resultados}
 
 \begin{figure}[H]
 	\centering
@@ -387,12 +417,21 @@ Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \
 	\caption{Verificaci\'on de que el filtro 2 cumple con la plantilla de atenuaci\'on propuesta}
 \end{figure}
 
+El comportamiento del circuito es el mismo al predicho por la simulaci\'on y los c\'alculos hasta frecuencias de $10kHz$. M\'as all\'a de eso no se pudo medir satisfactoriamente, puesto que la atenuaci\'on es demasiado grande como para obtener un valor representativo de la tensi\'on de salida. El filtro se ajusta satisfactoriamente a la plantilla de atenuaci\'on.\par
 
+Para comprobar que se cumple tambi\'en la plantilla de retardo de grupo, se calcul\'o num\'ericamente la derivada de la fase a partir de las mediciones obtenidas, y se determin\'o $\tau(0)$ como la primera de estas derivadas. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_gd.png}
 	\caption{Retardo de grupo del filtro 2}
 \end{figure}
+
+De acuerdo a lo determinado en la simulaci\'on, a pesar de que la plantilla de simulaci\'on se cumple de forma ajustada, el retardo de grupo se mantiene dentro de la plantilla hasta aproximadamente $4000Hz$. Por lo tanto este filtro cumple la condici\'on impuesta para el retardo de grupo en $2200Hz$.
+
+\section{Conclusiones}
+
+
+
 
 \end{document}

@@ -8,14 +8,15 @@ path = "Calculos/tc_tp5_ej1_bes6_mc.txt"
 #path = "tuvieja.txt"
 f = []
 mag = []
-mag1 = []
-mag2 = []
-mag3 = []
+# mag1 = []
+# mag2 = []
+# mag3 = []
 
 bw = []
-f1 = []
-f2 = []
-f3 = []
+fa = []
+# f1 = []
+# f2 = []
+# f3 = []
 
 input = open(path, "r")
 if not input.mode == "r":
@@ -33,38 +34,18 @@ while len(line):  # solo se devuelve vacio si llegue al EOF
         f.append(float(freq))
         m, line = line.split('d', 1)
         mag.append(float(m))
-        _, line = line.split('(', 1)
-        m, line = line.split('d', 1)
-        mag1.append(float(m))
-        _, line = line.split('(', 1)
-        m, line = line.split('d', 1)
-        mag2.append(float(m))
-        _, line = line.split('(', 1)
-        m, line = line.split('d', 1)
-        mag3.append(float(m))
         line = input.readline()
 
     a = next((m for m in mag if m < -3), None)
     if a is not None:
         bw.append(f[mag.index(a)])
 
-    a = next((m for m in mag1 if m < -3), None)
+    a = next((m for m in mag if m < -40), None)
     if a is not None:
-        f1.append(f[mag1.index(a)])
-
-    a = next((m for m in mag2 if m < -3), None)
-    if a is not None:
-        f2.append(f[mag2.index(a)])
-
-    a = next((m for m in mag3 if m < -3), None)
-    if a is not None:
-        f3.append(f[mag3.index(a)])
+        fa.append(f[mag.index(a)])
 
     f.clear()
     mag.clear()
-    mag1.clear()
-    mag2.clear()
-    mag3.clear()
 
     line = input.readline()
 
@@ -84,7 +65,7 @@ plt.ylabel('Probabilidad')
 plt.grid(True)
 plt.show()
 
-fig = sns.distplot(f1)
+fig = sns.distplot(fa)
 y_vals = fig.get_yticks()
 sum = 0
 for i in y_vals:
@@ -93,65 +74,65 @@ factor = 1/sum
 fig.set_yticklabels(['{:3.0f}%'.format(x * factor * 100) for x in y_vals])
 
 #plt.savefig("histograma_marce.png")
-plt.title('Polo primera etapa')
+plt.title('Frecuencia de banda atenuada')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Probabilidad')
 plt.grid(True)
 plt.show()
-
-
-fig = sns.distplot(f2)
-y_vals = fig.get_yticks()
-sum = 0
-for i in y_vals:
-    sum += i
-factor = 1/sum
-fig.set_yticklabels(['{:3.0f}%'.format(x * factor * 100) for x in y_vals])
-
-#plt.savefig("histograma_marce.png")
-plt.title('Polo segunda etapa')
-plt.xlabel('Frecuencia (Hz)')
-plt.ylabel('Probabilidad')
-plt.grid(True)
-plt.show()
-
-
-fig = sns.distplot(f3)
-y_vals = fig.get_yticks()
-sum = 0
-for i in y_vals:
-    sum += i
-factor = 1/sum
-fig.set_yticklabels(['{:3.0f}%'.format(x * factor * 100) for x in y_vals])
-
-#plt.savefig("histograma_marce.png")
-plt.title('Polo tercera etapa')
-plt.xlabel('Frecuencia (Hz)')
-plt.ylabel('Probabilidad')
-plt.grid(True)
-plt.show()
-# n, bins, _ = plt.hist(bw)
+#
+#
+# fig = sns.distplot(f2)
+# y_vals = fig.get_yticks()
+# sum = 0
+# for i in y_vals:
+#     sum += i
+# factor = 1/sum
+# fig.set_yticklabels(['{:3.0f}%'.format(x * factor * 100) for x in y_vals])
+#
+# #plt.savefig("histograma_marce.png")
+# plt.title('Polo segunda etapa')
 # plt.xlabel('Frecuencia (Hz)')
 # plt.ylabel('Probabilidad')
 # plt.grid(True)
 # plt.show()
 #
 #
-# n, bins, _ = plt.hist(f1)
+# fig = sns.distplot(f3)
+# y_vals = fig.get_yticks()
+# sum = 0
+# for i in y_vals:
+#     sum += i
+# factor = 1/sum
+# fig.set_yticklabels(['{:3.0f}%'.format(x * factor * 100) for x in y_vals])
+#
+# #plt.savefig("histograma_marce.png")
+# plt.title('Polo tercera etapa')
 # plt.xlabel('Frecuencia (Hz)')
 # plt.ylabel('Probabilidad')
 # plt.grid(True)
 # plt.show()
-#
-# n, bins, _ = plt.hist(f2)
-# plt.xlabel('Frecuencia (Hz)')
-# plt.ylabel('Probabilidad')
-# plt.grid(True)
-# plt.show()
-#
-#
-# n, bins, _ = plt.hist(f3)
-# plt.xlabel('Frecuencia (Hz)')
-# plt.ylabel('Probabilidad')
-# plt.grid(True)
-# plt.show()
+# # n, bins, _ = plt.hist(bw)
+# # plt.xlabel('Frecuencia (Hz)')
+# # plt.ylabel('Probabilidad')
+# # plt.grid(True)
+# # plt.show()
+# #
+# #
+# # n, bins, _ = plt.hist(f1)
+# # plt.xlabel('Frecuencia (Hz)')
+# # plt.ylabel('Probabilidad')
+# # plt.grid(True)
+# # plt.show()
+# #
+# # n, bins, _ = plt.hist(f2)
+# # plt.xlabel('Frecuencia (Hz)')
+# # plt.ylabel('Probabilidad')
+# # plt.grid(True)
+# # plt.show()
+# #
+# #
+# # n, bins, _ = plt.hist(f3)
+# # plt.xlabel('Frecuencia (Hz)')
+# # plt.ylabel('Probabilidad')
+# # plt.grid(True)
+# # plt.show()
