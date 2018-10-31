@@ -152,7 +152,7 @@ Filtro & BR\\ \hline
 
 
 \subsection{Elección de celda}
-Como el filtro solicitado es un rechaza banda, se necesita que la celda posea una salida pasa altos o rechaza banda, por ende, como  la celda Tow Thomas y la Akerberg Mossber no poseen fueron descartadas como opciones. En cuanto a la KHN Para realizar la salida rechaza banda se necesitan restar dos etapas, y por ende se eligió la flesher tow que posee una configuración pasa banda sin alterar el circuito (una sola etapa).
+Como el filtro solicitado es un rechaza banda, se necesita que la celda posea una salida pasa altos o rechaza banda, por ende, como  la celda Tow Thomas y la Akerberg Mossber no poseen fueron descartadas como opciones. En cuanto a la KHN Para realizar la salida rechaza banda se necesitan un sumador , y por ende se eligió la flesher tow que posee una configuración pasa banda sin alterar el circuito (una sola etapa).
 \subsection{Analisis de sensivilidades de la celda Fleischer Tow}
 Se realizó el calculo de las sencivilidades relativas de $Q$ y $W_0$ respecto a sus compoentes.
 $$S^{W_0}_{R_2}=S^{W_0}_{R_3}=S^{W_0}_{C_1}=S^{W_0}_{C_2}=- \frac{1}{2}$$
@@ -184,7 +184,7 @@ Se simularon las tres etapas en cascadas para corroborar que cumpla plantilla el
 	\includegraphics[width=0.8\textwidth]{imagenes/montecarlo.png}
 	\caption{Modulo de la respuesta en frecuencia}
 \end{figure}
-Como se observa en la simulación $f_0\in (28KHz,32KHz)$. Ademas presentan sobrepicos en ganancia, estos se deben a que se deja de cumplir la condicion para que las celdas sean pasa banda $R_4=\frac{R_5 R_1}{R}$.
+Como se observa en la simulación $f_0\in (28KHz,32KHz)$. Ademas presentan sobrepicos en ganancia, estos se deben a que se deja de cumplir la condicion para que las celdas sean pasa banda $R_4=\frac{R_5 R_1}{R}$ y los polos se alejan de los ceros.
 
 A partir del análisis de Montecarlo del circuito se realizó un histograma, para conocer la dispersión de las características relevantes del circuito.
 
