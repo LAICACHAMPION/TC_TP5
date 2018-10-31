@@ -191,6 +191,8 @@ Con esta configuraci\'on, las expresiones finales de $Q$ y $f_0$ son:
 	\label{eq:f0-q}
  \end{equation}
 
+Por \'ultimo, queda analizar la impedancia de entrada y de salida de este circuito, de forma tal que se pueda tener criterio para realizar la conexi\'on en cascada de distintas etapas que lo utilicen. A grandes rasgos, se puede observar que la impedancia de salida no es sino la del operacional que se utilice, que si se lo considera ideal es 0. Por lo tanto, para concatenar esta celda con otra del mismo tipo s\'olo se requiere que la impedancia de entrada no sea comparable con la salida de un \textit{opamp}. Como hay una resistencia en serie a la entrada del circuito, esta establecer\'a un valor m\'inimo para la impedancia de entrada: mientras que esta resistencia sea de cientos de $\Omega$ o m\'as, no deber\'ia observarse que las etapas se carguen entre s\'i.\par 
+
 
 
 \subsection{An\'alisis de sensibilidades} 
@@ -280,7 +282,7 @@ Por lo tanto en esta etapa se debe cumplir que:
 \begin{equation}
 	\left\{
  	\begin{aligned}
- 		f_0 &= \frac{1}{2\pi} \cdot \frac{1}{\sqrt{R_1 C_1}} \\
+ 		f_0 &= \frac{1}{2\pi \cdot R_1 C_1} \\
  		\frac{R_2}{R_1} &= 1
 	\end{aligned}
 	\right.
@@ -301,8 +303,39 @@ Los valores de los componentes se calcularon, pues, a partir de las f\'ormulas \
 	\caption{Valores de los componentes del filtro 1}
 \end{table}
 
+En este punto, el circuito propuesto no estar\'ia cumpliendo la condici\'on de tener impedancia de entrada mayor a $50k\Omega$: puesto que la primera etapa es el integrador, la impedancia de este circuito es constante $R_1 = 1k\Omega$ (considerando los \textit{op amps} como ideales). Si se corrigiese esto con $R_1 = R_2 = 50k\Omega$, se obtendr\'ia un valor de $C_1 = 108pF$. Consideramos que este valor es demasiado peque\~no para medir satisfactoriamente, puesto que es comparable con la capacidad de las puntas del osciloscopio, incluso con las puntas en $\times 10 \sim 10pF$, y esto sin siquiera tener en cuenta el hecho de que se deber\'ia dejar un margen de error para que la impedancia de entrada no deje de cumplir plantilla por las tolerancias de los componentes.\par
 
-\section{Filtro 2: Bessel}
+Por lo tanto, se decidi\'o utilizar un \textit{buffer} en la entrada, de forma tal que la impedancia de entrada sea la del operacional. El integrado utilizado tanto para el \textit{buffer} como para la realizaci\'on de las celdas fue el TL074, puesto que proporciona los 4 operacionales necesitados en un \'unico componente, y posee buenas prestaciones en cuanto a impedancia de entrada (lo cual es particularmente imporante para que las suposiciones realizadas sobre que la corriente en el operacional es despreciable se vean reflejadas en la realidad). Su principal desventaja respecto de otros operacionales es su ancho de banda, de $3MHz$, pero en este caso se espera atenuar$100\nicefrac{dB}{dec}$ a partir de los $33kHz$, con lo cual no es un problema. \par
+
+Para verificar que la tolerancia de los componentes no provocara que se dejara de cumplir plantilla, se efect\'uo un an\'alisis de Montecarlo en \textit{LtSpice}, considerando tolerancias del 10\% para los capacitores y de 1\% para las resistencias. A partir de esta simulaci\'on, se obtuvo la frecuencia de corte del filtro para 100 curvas.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagenes/leg_hist_bw.png}
+	\caption{Dispersi\'on de la frecuencia de corte del filtro 1}
+\end{figure}
+
+Se observa aqu\'i que si bien casi el 90\% de las curvas tienen $f_p \geq 33kHz$, existe la posibilidad de que esto no ocurra. Puesto que las tolerancias de los componentes no pueden mejorarse y todas las resistencias de una misma celda tienen el mismo valor y por lo tanto m\'inima sensibilidad a $Q$, se coloc\'o un preset en la $R_2$ de la \'ultima celda. Para peque\~nas variaciones de este valor alrededor de $R_1$, la variaci\'on de $Q$ deber\'ia ser pr\'acticamente nula, con lo cual se podr\'ia mover la frecuencia de corte del polo sin afectar el resto de los par\'ametros de la celda. Se verific\'o en \textit{Spice} que colocando un preset de $5k\Omega$ se podr\'ia mover la curva de la funci\'on transferencia al punto deseado.
+
+
+\subsection*{An\'alisis de resultados}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_leg_mag.png}
+	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_leg_fase.png}
+	\caption{Respuesta en frecuencia del filtro 1 (plantilla en rojo)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{imagenes/leg_bandapasante.jpg}
+	\caption{Verificaci\'on de que el filtro 1 cumple con la plantilla propuesta}
+\end{figure}
+
+El circuito cumple satisfactoriamente con la plantilla propuesta. La forma de la respuesta en frecuencia del circuito coincide con la medida y la calculada, pero la frecuencia de corte est\'a corrida aproximadamente $10kHz$. Esto puede deberse al ajuste que se tuvo que realizar con el preset: si la curva estaba corrida desde un principio por la dispersi\'on de los componentes (principalmente de los capacitores), al ajustar esa curva a una que cumpliera plantilla se puede haber obtenido un circuito considerablemente distinto al utilizado en la simulaci\'on. 
+
+\section{Filtro 2: Bessel para baja se\~nal}
 
 
 \begin{table}[H]
@@ -330,5 +363,36 @@ Etapa & $R_1\, (k\Omega)$ & $R_2\, (k\Omega)$ & $C_1\, (nF)$ & $C_2\, (nF)$ \\ \
 \end{tabular}
 \caption{Valores de los componentes del filtro 2}
 \end{table}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagenes/bes_hist_bw.png}
+	\caption{Dispersi\'on de la frecuencia de corte del filtro 2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_bes_mag.png}
+	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_bes_fase.png}
+	\caption{Respuesta en frecuencia del filtro 2 (plantilla en rojo)}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.42]{imagenes/bes_bandapasante.jpg}
+	\includegraphics[scale=0.4]{imagenes/bes_bandaatenuada.jpg}
+	\caption{Verificaci\'on de que el filtro 2 cumple con la plantilla de atenuaci\'on propuesta}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagenes/tc_tp5_ej1_gd.png}
+	\caption{Retardo de grupo del filtro 2}
+\end{figure}
 
 \end{document}
