@@ -137,7 +137,8 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
  	De aquí se presenta el circuito diseñado: \par
  	
  	 \section{Simulación}
-		
+	\subsection{Análisis de Montecarlo}
+ 	 
  	 \section{Mediciones}
  	 
  	 Se muestra la respuesta a una señal sinusoidal en la frecuencia central del pasabanda, con su respectiva ganancia.
@@ -147,15 +148,35 @@ Además, ambas etapas irán conectadas por un buffer para evitar que un circuito
 	\caption{Medición en la frecuencia central del pasabanda: 56 kHz}
 	\label{fig:ej2_frec_corte_posta}
 	\end{figure}
- 	\begin{figure}[H]	% Circuito implementado
-	\centering
 	
 	Se obtuvo la respuesta al escalón para observar la respuesta a todas las frecuencias y demostrar que el circuito no oscila.
-	\includegraphics[scale=0.5]{imagenes/resp_escalon.png}
+	
+ 	\begin{figure}[H]	% Circuito implementado
+	\centering
+	\includegraphics[scale=0.5]{imagenes/resp_esc.png}
 	\caption{Respuesta al escalón}
 	\label{fig:ej2_resp_escalon}
 	\end{figure}
- 	 \subsection{Análisis de Montecarlo}
+	
+	Se muestra la superposición con lo medido y se confirma que se cumple la plantilla.
+	 	\begin{figure}[H]	% medicion superpuesta con simulacion
+	\centering
+	\includegraphics[scale=0.2]{imagenes/montecarlo_superpuesto.png}
+	\caption{Simulación contra medido en escala semilogarítmica}
+	\label{fig:ej2_montecarlo_superpuesto}
+	\end{figure}
+	
+	Se agrega una foto de la medición directa, con las frecuencias de interés remarcadas, pudiéndose observar que efectivamente se cumple plantilla.
+	
+	\begin{figure}[H]	% medicion analog, foto
+	\centering
+	\includegraphics[scale=0.5]{imagenes/defaultc.png}
+	\caption{Medición realizada con un Analog Discovery 2}
+	\label{fig:ej2_defaultc}
+	\end{figure}
+	
+
+ 	 
  	 \subsection{}
 \clearpage\newpage
 
